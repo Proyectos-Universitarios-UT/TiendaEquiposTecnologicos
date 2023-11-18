@@ -1,0 +1,10 @@
+<!doctype html>
+
+<html lang="es" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="~{'layouts/header' :: header}"></head>
+<body>
+<nav th:replace="~{layouts/navbar :: navbar}"></nav>
+<main th:fragment="contenido" role="main" class="container"></main>
+<footer th:replace="~{layouts/footer :: footer}"></footer>
+</body>
+</html>

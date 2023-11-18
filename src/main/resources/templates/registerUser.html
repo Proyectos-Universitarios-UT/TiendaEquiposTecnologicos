@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="master">
+<body>
+    <div layout:fragment="content" >
+        <div class="col-12">
+        <h3>User Registration</h3>
+        <form action="saveUser" method="post">
+            <div class="table-responsive">
+            <table>
+                <tr>
+                    <td>Name</td>
+                    <td><input type="text" name="username"/></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td><input type="text" name="email"/></td>
+                </tr>
+                <tr>
+                    <td>Password</td>
+                    <td><input type="password" name="password"/></td>
+                </tr>
+                <tr>
+                    <td>Role(s)</td>
+                    <td>
+                        <input type="checkbox" name="roles" value="ADMIN"/>Admin
+                        <input type="checkbox" name="roles" value="MANAGER"/>Manager
+                        <input type="checkbox" name="roles" value="WINEMAKER"/>WINEMAKER
+                        <input type="checkbox" name="roles" value="SELLER"/>SELLER
+                    </td>
+                </tr>
+                <tr><td><input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/></td></tr>
+                <tr>
+                    <tr></tr>
+                    <td>
+                        <input type="submit" value="Register"/>
+                    </td>
+                </tr>
+            </table>
+            </div>
+        </form>
+        <div th:text="${msg}"></div>
+        </div>
+    </div>
+</body>
+</html>
