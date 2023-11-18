@@ -26,7 +26,7 @@ public class WebSecurityConfig {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/resgister", "/saveUser").permitAll()
+                        .requestMatchers("/", "/register", "/saveUser").permitAll()
                         .requestMatchers("/home").authenticated()
                         .requestMatchers("/**").hasAuthority("ADMIN")
                         .requestMatchers("**/products/show").hasAuthority("SELLER")

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="master">
+      layout:decorate="home">
 <body>
-    <div layout:fragment="content" >
+    <main layout:fragment="content" >
         <div class="col-12">
         <h3>User Registration</h3>
         <form action="saveUser" method="post">
@@ -42,6 +42,6 @@
         </form>
         <div th:text="${msg}"></div>
         </div>
-    </div>
+    </main>
 </body>
 </html>

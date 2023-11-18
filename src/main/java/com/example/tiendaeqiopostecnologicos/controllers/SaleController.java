@@ -15,9 +15,9 @@ public class SaleController {
     @Autowired
     private SalesRepository salesRepository;
 
-    @GetMapping("/sale")
+    @GetMapping("/sales")
     public String getSale(Model model){
         model.addAttribute("sales", salesRepository.findAll());
-        return "sales/get_sales";
+        return "sales/sales";
     }
 }

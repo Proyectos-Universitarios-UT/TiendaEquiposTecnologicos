@@ -1,43 +1,43 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="master">
+      layout:decorate="home">
 <body>
 <div layout:fragment="content">
     <div class="col-12">
-        <h2>Editar producto </h2>
-        <form th:object="${producto}" th:action="@{/productos/editar/} + ${producto.id}" method="post">
+        <h2>Edit product </h2>
+        <form th:object="${product}" th:action="@{/api/products/edit/} + ${product.id}" method="post">
             <input type="hidden" th:field="*{id}">
             <div class="form-group">
-                <label for="nombre">Nombre del producto</label>
-                <input autocomplete="off" autofocus th:field="*{nombre}" id="nombre"
-                       placeholder="Escribe el nombre del producto" type="text"
-                       class="form-control" th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:errors="*{nombre}"></div>
+                <label for="name">Product name</label>
+                <input autocomplete="off" autofocus th:field="*{name}" id="name"
+                       placeholder="Write product code" type="text"
+                       class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{name}"></div>
             </div>
             <div class="form-group">
-                <label for="codigo">Código de barras</label>
-                <input autocomplete="off" th:field="*{codigo}" id="codigo" placeholder="Escribe el código del producto"
+                <label for="sku">Código de barras</label>
+                <input autocomplete="off" th:field="*{sku}" id="sku" placeholder="Write product code"
                        type="text"
-                       class="form-control" th:classappend="${#fields.hasErrors('codigo')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:errors="*{codigo}"></div>
+                       class="form-control" th:classappend="${#fields.hasErrors('sku')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{sku}"></div>
             </div>
             <div class="form-group">
-                <label for="existencia">Existencia actual</label>
-                <input autocomplete="off" th:field="*{existencia}" id="existencia"
+                <label for="stock">Existencia actual</label>
+                <input autocomplete="off" th:field="*{existencia}" id="stock"
                        placeholder="Cantidad actual del producto" type="number"
-                       class="form-control" th:classappend="${#fields.hasErrors('existencia')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:errors="*{existencia}"></div>
+                       class="form-control" th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{stock}"></div>
             </div>
             <div class="form-group">
-                <label for="existencia">Precio</label>
-                <input autocomplete="off" th:field="*{precio}" id="precio" placeholder="Precio del producto"
+                <label for="price">Price</label>
+                <input autocomplete="off" th:field="*{price}" id="price" placeholder="Price product"
                        type="number"
-                       class="form-control" th:classappend="${#fields.hasErrors('precio')} ? 'is-invalid' : ''">
-                <div class="invalid-feedback" th:errors="*{precio}"></div>
+                       class="form-control" th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''">
+                <div class="invalid-feedback" th:errors="*{price}"></div>
             </div>
-            <button class="btn btn-success" type="submit">Guardar</button>
-            &nbsp;<a class="btn btn-warning" th:href="@{/productos/mostrar}">Ver todos</a>
+            <button class="btn btn-success" type="submit">Save</button>
+            &nbsp;<a class="btn btn-warning" th:href="@{/api/products/show}">All</a>
         </form>
     </div>
 </div>
