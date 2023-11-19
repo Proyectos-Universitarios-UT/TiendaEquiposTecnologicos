@@ -20,4 +20,12 @@ public class Sale {
     @Column(name = "sale_products")
     private Set<ProductSold> products;
 
+    public Double getTotal(){
+        Double total = 0.0;
+        for (ProductSold prod : products) {
+            total += prod.getTotal();
+        }
+        return total;
+    }
+
 }

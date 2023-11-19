@@ -34,4 +34,8 @@ public class ProductSold {
         this.SKU = sku;
         this.sale = sale;
     }
+
+    public Double getTotal(){
+        return this.quantityProducts * this.price;
+    }
 }
