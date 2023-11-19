@@ -15,7 +15,7 @@
              th:text="${mensaje}"
              class="alert">
         </div>
-        <form th:object="${product}" th:action="@{/api/products/add}" method="post">
+        <form th:object="${product}" th:action="@{/api/products/save}" method="post">
             <div class="table-responsive">
             <table class="table table-sm">
                 <tr>
@@ -25,6 +25,16 @@
                                type="text"
                                class="form-control" th:classappend="${#fields.hasErrors('SKU')} ? 'is-invalid' : ''"></td>
                     <div class="invalid-feedback" th:errors="*{SKU}"></div>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="form-group">
+                        <td colspan="4"><label for="stock">Product name</label></td>
+                        <td colspan="4"><input autocomplete="off" th:field="*{name}" id="stock"
+                                               placeholder="name" type="text"
+                                               class="form-control" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"></td>
+                        <div class="invalid-feedback" th:errors="*{name}"></div>
+
                     </div>
                 </tr>
                 <tr>
@@ -39,9 +49,10 @@
                 </tr>
                 <tr><div class="form-group">
                     <td colspan="4"><label for="stock">Specifications</label></td>
-                    <td colspan="4"><input autocomplete="off" th:field="*{especifications}" id="price" placeholder="Specifications"
-                               type="text" hidden="hidden"
-                               class="form-control" th:classappend="${#fields.hasErrors('especifications')} ? 'is-invalid' : ''">
+                    <td colspan="4">
+<!--                        <input autocomplete="off" th:field="*{especifications}" id="price" placeholder="Specifications"-->
+<!--                               type="text" hidden="hidden"-->
+<!--                               class="form-control" th:classappend="${#fields.hasErrors('especifications')} ? 'is-invalid' : ''">-->
                         <p>
                             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEspecifications" aria-expanded="false" aria-controls="collapseExample">
                                 Specifications
@@ -49,7 +60,7 @@
                         </p>
                         <div class="collapse" id="collapseEspecifications">
                             <div class="card card-body">
-                                <input type="checkbox" th:field="*{especifications}" name="especifications" value="SSD"/>SSD<br>
+                                <input type="checkbox" th:field="*{especifications}" name="especifications" value="SSD"/>RAM Memory<br>
                                 <input type="checkbox" th:field="*{especifications}" name="especifications" value="SSD"/>SSD<br>
                                 <input type="checkbox" th:field="*{especifications}" name="especifications" value="Operating System"/>Operating System<br>
                                 <input type="checkbox" th:field="*{especifications}" name="especifications" value="Video Target"/>Video Target
@@ -73,15 +84,16 @@
                             </p>
                             <div class="collapse" id="collapseCategory">
                                 <div class="card card-body">
-                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="SSD"/>SSD<br>
-                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="SSD"/>SSD<br>
-                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Operating System"/>Operating System<br>
-                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Video Target"/>Video Target
+                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Phones"/>Phones<br>
+                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Tablets"/>Tablets<br>
+                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Computers"/>Computers<br>
+                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Audio"/>Audio<br>
+                                    <input type="checkbox" th:field="*{especifications}" name="especifications" value="Video"/>Video
                                 </div>
                             </div>
-                            </div><input autocomplete="off" th:field="*{category}" id="price" placeholder="Category"
-                                   type="text"
-                                   class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' : ''"></td>
+<!--                            </div><input autocomplete="off" th:field="*{category}" id="price" placeholder="Category"-->
+<!--                                   type="text"-->
+<!--                                   class="form-control" th:classappend="${#fields.hasErrors('category')} ? 'is-invalid' : ''"></td>-->
                     <div class="invalid-feedback" th:errors="*{category}"></div>
 
                 </div>
@@ -95,23 +107,25 @@
                     <div class="invalid-feedback" th:errors="*{manufacturer}"></div>
 
                 </div></tr>
-                <tr>
-                    <div class="form-group">
-                        <td colspan="4"><label for="stock">Images</label></td>
-                        <td colspan="4"><input autocomplete="off" th:field="*{image}" id="price" placeholder="Images"
-                                   type="text"
-                                   class="form-control" th:classappend="${#fields.hasErrors('image')} ? 'is-invalid' : ''">
-                            <input accept="image/png,image/jpeg" th:field="*{image}" #foto required id="images" multiple type="file">
-                            <app-loading-button [uploading]="uploading" texto="Save" (click)="save()"></app-loading-button></td>
-                    <div>
-                    </div>
-                    <div class="invalid-feedback" th:errors="*{image}"></div>
+<!--                <tr>-->
+<!--                    <div class="form-group">-->
+<!--                        <td colspan="4"><label for="stock">Images</label></td>-->
+<!--                        <td colspan="4">-->
+<!--&lt;!&ndash;                            <input autocomplete="off" th:field="*{image}" id="price" placeholder="Images"&ndash;&gt;-->
+<!--&lt;!&ndash;                                   type="text"&ndash;&gt;-->
+<!--&lt;!&ndash;                                   class="form-control" th:classappend="${#fields.hasErrors('image')} ? 'is-invalid' : ''">&ndash;&gt;-->
+<!--                            <input accept="image/png,image/jpeg" th:field="*{image}" #foto required id="images" multiple type="file"-->
+<!--                                   th:classappend="${#fields.hasErrors('image')} ? 'is-invalid' : ''">-->
+<!--                            <app-loading-button [uploading]="uploading" texto="Save" (click)="save()"></app-loading-button></td>-->
+<!--                    <div>-->
+<!--                    </div>-->
+<!--                    <div class="invalid-feedback" th:errors="*{image}"></div>-->
 
-                </div></tr>
+<!--                </div></tr>-->
                 <tr><div class="form-group">
                     <td colspan="4"><label for="stock">Price</label></td>
                     <td colspan="4"><input autocomplete="off" th:field="*{price}" id="price" placeholder="Price"
-                               type="text"
+                               type="number"
                                class="form-control" th:classappend="${#fields.hasErrors('price')} ? 'is-invalid' : ''"></td>
                     <div class="invalid-feedback" th:errors="*{price}"></div>
 
@@ -119,7 +133,7 @@
                 <tr><div class="form-group">
                     <td colspan="4"><label for="stock">Stock</label></td>
                     <td colspan="4"><input autocomplete="off" th:field="*{stock}" id="price" placeholder="Stock"
-                               type="text"
+                               type="number"
                                class="form-control" th:classappend="${#fields.hasErrors('stock')} ? 'is-invalid' : ''"></td>
                     <div class="invalid-feedback" th:errors="*{stock}"></div>
 
@@ -127,16 +141,17 @@
                 <tr><div class="form-group">
                     <td colspan="4"><label for="stock">Weight</label></td>
                     <td colspan="4"><input autocomplete="off" th:field="*{weight}" id="price" placeholder="Weight"
-                               type="text"
+                               type="number"
                                class="form-control" th:classappend="${#fields.hasErrors('weight')} ? 'is-invalid' : ''"></td>
                     <div class="invalid-feedback" th:errors="*{weight}"></div>
 
                 </div></tr>
                 <tr><div class="form-group">
                     <td colspan="4"><label for="stock">Dimensions</label></td>
-                    <td colspan="4"><input autocomplete="off" th:field="*{dimensions}" id="price" placeholder="dimensions"
-                               type="text"
-                               class="form-control" th:classappend="${#fields.hasErrors('dimensions')} ? 'is-invalid' : ''">
+                    <td colspan="4">
+<!--                        <input autocomplete="off" th:field="*{dimensions}" id="price" placeholder="dimensions"-->
+<!--                               type="text"-->
+<!--                               class="form-control" th:classappend="${#fields.hasErrors('dimensions')} ? 'is-invalid' : ''">-->
                         <p>
                             <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseDimensions" aria-expanded="false" aria-controls="collapseExample">
                                 Dimensions
@@ -146,13 +161,13 @@
                             <div class="card card-body">
                                 <ol class="list-group">
                                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                                        <input type="text" th:field="*{dimensions}" name="dimensions" placeholder="Height"/>
+                                        <input type="number" th:field="*{dimensions}" name="dimensions" placeholder="Height"/>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                                        <input type="text" th:field="*{dimensions}" name="dimensions" placeholder="Width"/>
+                                        <input type="number" th:field="*{dimensions}" name="dimensions" placeholder="Width"/>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-start">
-                                        <input type="text" th:field="*{dimensions}" name="dimensions" placeholder="Deep"/>
+                                        <input type="number" th:field="*{dimensions}" name="dimensions" placeholder="Deep"/>
                                     </li>
                                 </ol>
 
@@ -168,6 +183,6 @@
             </div>
         </form>
     </div>
-</main>
+</div>
 </body>
 </html>

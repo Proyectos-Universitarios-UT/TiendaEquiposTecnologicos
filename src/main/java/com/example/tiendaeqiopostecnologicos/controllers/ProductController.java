@@ -10,15 +10,12 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
-
 
     @GetMapping("/show")
     public String getProducts(Model model){
@@ -68,7 +65,7 @@ public class ProductController {
         return "products/edit_product";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/ save")
     public String saveProduct(@ModelAttribute @Validated Product product,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()){
@@ -77,11 +74,11 @@ public class ProductController {
         if (productRepository.findFirstBySKU(product.getSKU()) != null){
             redirectAttributes.addFlashAttribute("message", "Product with this code exist!")
                     .addFlashAttribute("class", "warning");
-            return "redirect:/api/products/add";
+            return "redirect:products/add_product";
         }
         productRepository.save(product);
         redirectAttributes.addFlashAttribute("message", "Porduct add succesfully!")
                 .addFlashAttribute("class", "warning");
-        return "redirect:/api/products/add";
+        return "redirect:products/add_product";
     }
 }
