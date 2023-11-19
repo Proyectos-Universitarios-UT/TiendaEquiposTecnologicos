@@ -1,9 +1,6 @@
 package com.example.tiendaeqiopostecnologicos.dto;
 
 import com.example.tiendaeqiopostecnologicos.entities.Product;
-import lombok.*;
-
-
 
 public class ProductToSale extends Product {
 

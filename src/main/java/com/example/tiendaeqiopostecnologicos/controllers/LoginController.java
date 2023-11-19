@@ -8,7 +8,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -19,10 +18,10 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/login")
-    public String getLogin(){
-        return "login";
-    }
+//    @GetMapping("/login")
+//    public String getLogin(){
+//        return "login";
+//    }
 
     @PostMapping("/login")
     public String login(@RequestParam("username") String username,
@@ -31,7 +30,7 @@ public class LoginController {
         // Validar usuario y contraseña
         Optional<User> user = userService.validateUser(username, password);
 
-        if(user != null) {
+        if(user.isPresent()) {
             // Autenticar manualmente al usuario
             Authentication auth = new UsernamePasswordAuthenticationToken(user, null);
             SecurityContextHolder.getContext().setAuthentication(auth);
