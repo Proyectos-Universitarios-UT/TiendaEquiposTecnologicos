@@ -60,24 +60,8 @@ public class Product {
     @Column(name="product_dimension")
     private Set<Double> dimensions;
 
-//    public Product(String name, String sku, Double price, Long id, Integer stock) {
-//        this.name = name;
-//        this.SKU = sku;
-//        this.price = price;
-//        this.id = id;
-//        this.stock = stock;
-//    }
-//
-//    public Product(String name, String sku, Double price, Integer stock) {
-//        this.name = name;
-//        this.SKU = sku;
-//        this.price = price;
-//        this.stock = stock;
-//    }
-
-
     public void substractExistence(Integer quantity){
-        this.stock -= stock;
+        this.stock -= quantity;
     }
 
     public boolean isEmptyStock(){

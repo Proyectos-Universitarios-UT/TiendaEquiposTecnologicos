@@ -1,7 +1,12 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="home">
+<!-- Cargar el CSS de Boostrap-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+
 <body>
 <div layout:fragment="content">
     <div class="col-12">
@@ -12,25 +17,37 @@
         </div>
         <a class="btn btn-success mb-2" th:href="@{/api/products/add}">Add</a>
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-bordered table-responsive">
                 <thead>
                 <tr>
                     <th>Name</th>
                     <th>Sku</th>
+                    <th>Description</th>
+                    <th>Specifications</th>
+                    <th>Category</th>
+                    <th>Manufacturer</th>
+                    <th>Image</th>
                     <th>Price</th>
                     <th>Stock</th>
+                    <th>Weight</th>
+                    <th>Dimensions</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="product : ${products}">
-                    <td th:text="${product.nombre}"></td>
-                    <td th:text="${product.codigo}"></td>
-                    <td th:text="${product.precio}"></td>
-                    <td th:text="${product.existencia}"></td>
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.SKU}"></td>
+                    <td th:text="${product.descrition}"></td>
+                    <td th:text="${product.especifications}"></td>
+                    <td th:text="${product.category}"></td>
+                    <td th:text="${product.manufacturer}"></td>
+                    <td th:text="${product.Image}"></td>
+                    <td th:text="${product.price}"></td>
+                    <td th:text="${product.weight}"></td>
                     <td>
-                        <a class="btn btn-warning" th:href="@{/api/products/edit/} + ${product.id}">edot <i
+                        <a class="btn btn-warning" th:href="@{/api/products/edit/} + ${product.id}">Edit <i
                                 class="fa fa-edit"></i></a>
                     </td>
                     <td>
