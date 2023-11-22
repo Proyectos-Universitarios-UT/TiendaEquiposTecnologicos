@@ -133,7 +133,8 @@ public class CartController {
             }
         }
         if (!encontrado) {
-            cart.add(new ProductToSale(pruductFindBySKU.getName(), pruductFindBySKU.getSKU(), pruductFindBySKU.getPrice(), pruductFindBySKU.getStock(), pruductFindBySKU.getId(), 1));
+            cart.add(new ProductToSale(pruductFindBySKU.getName(), pruductFindBySKU.getSKU(), pruductFindBySKU.getPrice(),
+                    pruductFindBySKU.getStock(), pruductFindBySKU.getId(), 1));
         }
         this.saveCart(cart, request);
         return "redirect:/cart/cart";

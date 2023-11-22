@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+<html html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="home">
 <!-- Cargar el CSS de Boostrap-->
@@ -15,46 +15,32 @@
              th:text="${message}"
              class="alert">
         </div>
-        <a class="btn btn-success mb-2" th:href="@{/api/products/add}">Add</a>
+        <a class="btn btn-success mb-2" th:href="@{/api/users/register}">Add</a>
         <div class="table-responsive">
             <table class="table table-bordered table-responsive">
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Sku</th>
-                    <th>Description</th>
-                    <th>Specifications</th>
-                    <th>Category</th>
-                    <th>Manufacturer</th>
-                    <th>Image</th>
-                    <th>Price</th>
-                    <th>Stock</th>
-                    <th>Weight</th>
-                    <th>Dimensions</th>
+                    <th>Email</th>
+                    <th>Password</th>
+                    <th>Roles</th>
                     <th>Edit</th>
                     <th>Delete</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="product : ${products}">
-                    <td th:text="${product.name}"></td>
-                    <td th:text="${product.SKU}"></td>
-                    <td th:text="${product.description}"></td>
-                    <td th:text="${#strings.listJoin(product.especifications,',')}"></td>
-                    <td th:text="${#strings.listJoin(product.category,',')}"></td>
-                    <td th:text="${#strings.listJoin(product.manufacturer,',')}"></td>
-                    <td th:text="${product.Image}"></td>
-                    <td th:text="${product.price}"></td>
-                    <td th:text="${product.stock}"></td>
-                    <td th:text="${product.weight}"></td>
-                    <td th:text="${#strings.listJoin(product.dimensions,' cm,')}"></td>
+                <tr th:each="user : ${users}">
+                    <td th:text="${user.username}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.password}"></td>
+                    <td th:text="${user.roles}"></td>
                     <td>
-                        <a class="btn btn-warning" th:href="@{/api/products/edit/} + ${product.id}">Edit <i
+                        <a class="btn btn-warning" th:href="@{/api/users/edit/} + ${user.id}">Edit <i
                                 class="fa fa-edit"></i></a>
                     </td>
                     <td>
-                        <form th:action="@{/api/products/delete}" method="post">
-                            <input type="hidden" name="id" th:value="${product.id}"/>
+                        <form th:action="@{/api/users/delete}" method="post">
+                            <input type="hidden" name="id" th:value="${user.id}"/>
                             <button type="submit" class="btn btn-danger">Delete <i class="fa fa-trash"></i>
                             </button>
                         </form>
