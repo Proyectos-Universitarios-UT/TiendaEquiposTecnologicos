@@ -26,12 +26,13 @@ public class WebSecurityConfig {
 
         http
                 .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/register", "/saveUser").permitAll()
+                        .requestMatchers("/").permitAll()
                         .requestMatchers("/home").authenticated()
                         .requestMatchers("/**").hasAuthority("ADMIN")
-                        .requestMatchers("**/products/show").hasAuthority("SELLER")
-                        .requestMatchers("**/products/show", "**/products/add", "**/products/edit").hasAuthority("WINEMAKER")
-                        .requestMatchers("/reports/**").hasAnyAuthority("MANAGER", "ADMIN")
+                        .requestMatchers("/api/products/show","/api/seles/**","/api/cart/**").hasAuthority("SELLER")
+                        .requestMatchers("/api/products/**").hasAuthority("WINEMAKER")
+                        .requestMatchers("/reports/**","/api/users/register", "/api/saveUser", "/api/users")
+                        .hasAnyAuthority("MANAGER", "ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

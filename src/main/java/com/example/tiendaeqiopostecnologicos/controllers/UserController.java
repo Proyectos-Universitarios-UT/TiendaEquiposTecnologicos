@@ -1,7 +1,6 @@
 package com.example.tiendaeqiopostecnologicos.controllers;
 
 import com.example.tiendaeqiopostecnologicos.entities.User;
-import com.example.tiendaeqiopostecnologicos.services.LoginService;
 import com.example.tiendaeqiopostecnologicos.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,17 +8,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/api")
 public class UserController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private LoginService loginService;
-
-
-    @GetMapping("/register")
+    @GetMapping("/users/register")
     public String register(){
         return "registerUser";
     }
@@ -30,5 +27,12 @@ public class UserController {
         String message = "User "+id+" saved successfully!";
         model.addAttribute("msg", message);
         return "registerUser";
+    }
+
+    @GetMapping("/users")
+    public String listUsers(Model model){
+        model.addAttribute("users", userService.findAll());
+        System.out.println(userService.findAll());
+        return "users/list_users";
     }
 }
