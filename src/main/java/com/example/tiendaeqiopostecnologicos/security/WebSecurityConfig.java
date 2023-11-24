@@ -26,6 +26,10 @@ public class WebSecurityConfig {
 
         http
                 .authorizeHttpRequests((requests) -> requests
+                        .requestMatchers("/css/**").permitAll()
+                        .requestMatchers("/fonts/**").permitAll()
+                        .requestMatchers("/img/**").permitAll()
+                        .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/").permitAll()
                         .requestMatchers("/home").authenticated()
                         .requestMatchers("/**").hasAuthority("ADMIN")
