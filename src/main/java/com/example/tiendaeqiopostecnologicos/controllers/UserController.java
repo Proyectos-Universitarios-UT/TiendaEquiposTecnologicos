@@ -17,8 +17,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/users/register")
-    public String register(){
-        return "registerUser";
+    public String register(Model model){
+        return "users/registerUser";
     }
 
     @PostMapping("/saveUser")
@@ -29,7 +29,7 @@ public class UserController {
         return "registerUser";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users/list")
     public String listUsers(Model model){
         model.addAttribute("users", userService.findAll());
         System.out.println(userService.findAll());

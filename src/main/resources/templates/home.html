@@ -1,10 +1,12 @@
 <!doctype html>
 <html html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layouts/header :: header"></head>
+<head th:insert="~{layouts/header :: header}"></head>
 <body>
-<div th:replace="layouts/navbar :: navbar"></div>
-<div th:replace="layouts/sidebar :: sidebar"></div>
-<div th:fragment="content" role="main" class="container"></div>
-<div th:replace="layouts/footer :: footer"></div>
+    <div th:insert="~{layouts/navbar :: navbar}"></div>
+<!--    <div th:insert="~{layouts/sidebar :: sidebar}"></div>-->
+    <div class="container">
+        <div th:fragment="content" role="main" class="content"></div>
+    </div>
+    <div th:insert="~{layouts/footer :: footer}"></div>
 </body>
 </html>

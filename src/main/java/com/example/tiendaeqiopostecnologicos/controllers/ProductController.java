@@ -33,7 +33,7 @@ public class ProductController {
         redirectAttributes.addFlashAttribute("message", "Delete succesfully!")
                 .addFlashAttribute("class", "warning");
         productRepository.deleteById(product.getId());
-        return "redirect:products/list_products";
+        return "products/list_products";
     }
 
     @PostMapping("/edit/{id}")
@@ -43,7 +43,7 @@ public class ProductController {
             if (product.getId() != null){
                 return "products/edit_product";
             }
-            return "redirect:products/list_products";
+            return "products/list_products";
         }
 
         Product posibleExist = productRepository.findFirstBySKU(product.getSKU());
@@ -51,12 +51,12 @@ public class ProductController {
         if (posibleExist != null && !posibleExist.getId().equals(product.getId())){
             redirectAttributes.addFlashAttribute("message", "Product with this code exist!")
                     .addFlashAttribute("class", "warning");
-            return "redirect:products/add_product";
+            return "products/add_product";
         }
         productRepository.save(product);
         redirectAttributes.addFlashAttribute("message", "Porduct edited succesfully!")
                 .addFlashAttribute("class", "warning");
-        return "redirect:products/list_products";
+        return "products/list_products";
     }
 
     @GetMapping("/edit/{id}")
@@ -69,7 +69,7 @@ public class ProductController {
     public String saveProduct(@ModelAttribute @Validated Product product,
                               BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()){
-            return "products/add_product";
+            return "redirect:products/add_product";
         }
         if (productRepository.findFirstBySKU(product.getSKU()) != null){
             redirectAttributes.addFlashAttribute("message", "Product with this code exist!")
@@ -79,6 +79,6 @@ public class ProductController {
         productRepository.save(product);
         redirectAttributes.addFlashAttribute("message", "Porduct add succesfully!")
                 .addFlashAttribute("class", "warning");
-        return "redirect:products/add_product   ";
+        return "redirect:products/list_products";
     }
 }
