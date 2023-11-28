@@ -20,8 +20,8 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product decreaseStock(Integer quantitySold, String sku) {
         Product product = productRepository.findFirstBySKU(sku);
-        Integer newStock = quantitySold - product.getStock();
-        product.setStock(newStock);
+        Integer newStock = Math.toIntExact(quantitySold - product.getStock());
+        product.setStock(Long.valueOf(newStock));
         return product;
     }
 

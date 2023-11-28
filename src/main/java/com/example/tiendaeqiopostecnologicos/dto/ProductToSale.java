@@ -1,29 +1,32 @@
 package com.example.tiendaeqiopostecnologicos.dto;
 
 import com.example.tiendaeqiopostecnologicos.entities.Product;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Transactional
 public class ProductToSale extends Product {
 
-    public Integer quantity;
+    public Long quantity;
 
-    public ProductToSale(String name, String sku, Double price, Integer stock, Long id, int i) {
+    public ProductToSale(String name, String sku, String description, Double price, Long id, Long quantity) {
+        super(name, sku, description, price, id);
+        this.quantity = quantity;
     }
 
     public Double getTotalSold(){
         return  this.getPrice() * this.quantity;
     }
 
-    public void increaseQuantity() {
+    public void increaseQuantity(Long quantity) {
         this.quantity++;
     }
 
-    public Integer getQuantity() {
+    public Long getQuantity() {
         return quantity;
     }
 }

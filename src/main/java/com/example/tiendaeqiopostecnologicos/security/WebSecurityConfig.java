@@ -35,8 +35,8 @@ public class WebSecurityConfig {
                         .requestMatchers("/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/products/show","/api/seles/**","/api/cart/**").hasAuthority("SELLER")
                         .requestMatchers("/api/products/**").hasAuthority("WINEMAKER")
-                        .requestMatchers("/reports/**","/api/users/register", "/api/saveUser", "/api/users")
-                        .hasAnyAuthority("MANAGER", "ADMIN")
+                        .requestMatchers("api/reports/**","/api/users/register", "/api/saveUser", "/api/users")
+                        .hasAnyAuthority("MANAGER", "ADMIN", "SELLER","WINEMAKER")
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

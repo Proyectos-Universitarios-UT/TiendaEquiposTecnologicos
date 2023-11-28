@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,7 +36,7 @@ public class CartController {
             cart.remove(id);
             this.saveCart(cart, request);
         }
-        return "/api/cart/sale";
+        return "cart/cart";
     }
 
     private void cleanCart(HttpServletRequest request) {
@@ -46,19 +45,23 @@ public class CartController {
 
     @GetMapping(value = "/clean")
     public String cancelSale(HttpServletRequest request, RedirectAttributes redirectAttrs) {
+        ArrayList<ProductToSale> cart = this.getCart(request);
+        if (cart.size() <= 0){
+            return "cart/cart";
+        }
         this.cleanCart(request);
         redirectAttrs
                 .addFlashAttribute("mensaje", "Venta cancelada")
                 .addFlashAttribute("clase", "info");
-        return "redirect:/api/cart/sale";
+        return "cart/cart";
     }
 
     @PostMapping(value = "/finish")
     public String finishSale(HttpServletRequest request, RedirectAttributes redirectAttrs) {
         ArrayList<ProductToSale> cart = this.getCart(request);
         // Si no hay carrito o está vacío, regresamos inmediatamente
-        if (cart == null || cart.size() <= 0) {
-            return "redirect:/api/cart/sale";
+        if (cart.size() <= 0) {
+            return "cart/cart";
         }
         Sale sale = salesRepository.save(new Sale());
         // Recorrer el carrito
@@ -72,7 +75,7 @@ public class CartController {
             productRepository.save(p);
             // Creamos un nuevo producto que será el que se guarda junto con la venta
             ProductSold productSold = new ProductSold(productToSale.quantity,productToSale.getPrice(),productToSale.getName(),
-                    productToSale.getSKU(),sale);
+                    productToSale.getSKU(), productToSale.getDescription(), sale);
             // Y lo guardamos
             productSoldRepsitory.save(productSold);
         }
@@ -83,7 +86,7 @@ public class CartController {
         redirectAttrs
                 .addFlashAttribute("mensaje", "Venta realizada correctamente")
                 .addFlashAttribute("clase", "success");
-        return "redirect:/api/cart/sale";
+        return "cart/cart";
     }
 
     @GetMapping(value = "/sale")
@@ -91,7 +94,10 @@ public class CartController {
         model.addAttribute("product", new Product());
         float total = 0;
         ArrayList<ProductToSale> cart = this.getCart(request);
-        for (ProductToSale p: cart) total += p.getTotalSold();
+        for (ProductToSale p: cart) {
+            System.out.println(p.getTotalSold());
+            total += p.getTotalSold();
+        }
         model.addAttribute("total", total);
         return "cart/cart";
     }
@@ -111,32 +117,33 @@ public class CartController {
     @PostMapping(value = "/add")
     public String addAtCart(@ModelAttribute Product product, HttpServletRequest request, RedirectAttributes redirectAttrs) {
         ArrayList<ProductToSale> cart = this.getCart(request);
-        Product pruductFindBySKU = productRepository.findFirstBySKU(product.getSKU());
-        if (pruductFindBySKU == null) {
+        Product productFindBySKU = productRepository.findFirstBySKU(product.getSKU());
+        if (productFindBySKU == null) {
             redirectAttrs
                     .addFlashAttribute("mensaje", "El producto con el código " + product.getSKU() + " no existe")
                     .addFlashAttribute("clase", "warning");
-            return "redirect:/cart/cart";
+            return "/cart/cart";
         }
-        if (pruductFindBySKU.isEmptyStock()) {
+        if (productFindBySKU.isEmptyStock()) {
             redirectAttrs
                     .addFlashAttribute("mensaje", "El producto está agotado")
                     .addFlashAttribute("clase", "warning");
-            return "redirect:/cart/cart";
+            return "/cart/cart";
         }
+        Long quantity = product.getQuantity();
         boolean encontrado = false;
         for (ProductToSale productToSaleActual : cart) {
-            if (productToSaleActual.getSKU().equals(pruductFindBySKU.getSKU())) {
-                productToSaleActual.increaseQuantity();
+            if (productToSaleActual.getSKU().equals(productFindBySKU.getSKU())) {
+                productToSaleActual.increaseQuantity(quantity);
                 encontrado = true;
                 break;
             }
         }
         if (!encontrado) {
-            cart.add(new ProductToSale(pruductFindBySKU.getName(), pruductFindBySKU.getSKU(), pruductFindBySKU.getPrice(),
-                    pruductFindBySKU.getStock(), pruductFindBySKU.getId(), 1));
+            cart.add(new ProductToSale(productFindBySKU.getName(), productFindBySKU.getSKU(),
+                    productFindBySKU.getDescription(), productFindBySKU.getPrice(), productFindBySKU.getId(), quantity));
         }
         this.saveCart(cart, request);
-        return "redirect:/cart/cart";
+        return "cart/cart";
     }
 }

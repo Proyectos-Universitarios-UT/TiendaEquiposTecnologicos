@@ -22,15 +22,23 @@ public class ProductSold {
     @Column(name="product_price")
     private Double price;
     @Column(name="product_stock")
-    private Integer quantityProducts;
+    private Long quantityProducts;
     @ManyToOne
     @JoinColumn(name = "sale_id", nullable = false)
     private Sale sale;
 
-    public ProductSold(Integer quantity, Double price, String name, String sku, Sale sale) {
+    public ProductSold(Long quantity, Double price, String name, String sku, String description, Sale sale) {
         this.quantityProducts = quantity;
         this.price = price;
         this.name = name;
+        this.SKU = sku;
+        this.description = description;
+        this.sale = sale;
+    }
+
+    public ProductSold(String name, Double price, String sku, Sale sale) {
+        this.name = name;
+        this.price = price;
         this.SKU = sku;
         this.sale = sale;
     }

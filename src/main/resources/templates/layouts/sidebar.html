@@ -1,8 +1,9 @@
-<aside th:fragment="sidebar" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-     class="d-flex flex-column flex-shrink-0 p-3 text-white navbar-expand-lg bg-dark" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-        <span class="fs-4">Sidebar</span>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="sidebar"
+       class="d-flex flex-column flex-shrink-0 p-3 text-white navbar navbar-expand-lg bg-dark" style="width: 280px;">
+    <a href="#" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32"><use xlink:href="#"/></svg>
+        <span class="fs-4">Home</span>
     </a>
     <hr>
     <ul class="nav flex-column mb-auto ">
@@ -25,7 +26,7 @@
             </a>
         </li>
         <li>
-            <a href="@{/api/products/show}" class="nav-link text-white">
+            <a th:href="@{/api/products/show}" class="nav-link text-white">
                 <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
                 Products
             </a>
@@ -50,4 +51,5 @@
             <li><a class="dropdown-item" href="#">Sign out</a></li>
         </ul>
     </div>
-</aside>
+</div>
+</html>

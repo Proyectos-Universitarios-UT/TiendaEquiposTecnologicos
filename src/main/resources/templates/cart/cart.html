@@ -2,12 +2,22 @@
 <html lang="es" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="home">
-<!-- Cargar el CSS de Boostrap-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-
-<body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Sitemap Store of devices Electronics">
+    <meta name="author" content="The Ones">
+    <title>Control ventas Tienda Tecnologica</title>
+    <!-- Cargar el CSS de Boostrap-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</head>
+<body class="hold-transition skin-blue fixed sidebar-mini fuelux">
+<div class="container-md">
+<div th:insert="~{layouts/navbar :: navbar}"></div>
+</div>
+<div class="container-md">
 <div layout:fragment="content">
     <div class="col-12">
         <h2>Vender</h2>
@@ -15,31 +25,39 @@
              th:text="${message}"
              class="alert">
         </div>
-        <form th:object="${product}" th:action="@{/api/cart/add}" method="post">
+        <form  class="mb-2" th:object="${product}" th:action="@{/api/cart/add}" method="post">
             <div class="form-group">
                 <label for="sku">Código de barras</label>
-                <input autofocus autocomplete="off" th:field="*{SKU}" id="sku"
-                       placeholder="Escanea el código o escríbelo y presiona Enter"
-                       type="text"
-                       class="form-control" th:classappend="${#fields.hasErrors('SKU') ? 'is-invalid' : ''}">
+                <div>
+                    <input autofocus autocomplete="off" th:field="*{SKU}" id="sku"
+                           placeholder="Escanea el código o escríbelo y presiona Enter"
+                           type="text"
+                           class="form-control" th:classappend="${#fields.hasErrors('SKU') ? 'is-invalid' : ''}">
+                </div>
+                <label for="quantity">Cantidad</label>
+                <div>
+                    <input autocomplete="off" th:field="*{quantity}" id="quantity"
+                           placeholder="Escriba la cantidad"
+                           type="text"
+                           class="form-control" >
+                </div>
                 <div class="invalid-feedback" th:errors="*{SKU}"></div>
+                <button type="submit" class="btn btn-success">Add product</button>
 
             </div>
         </form>
         <form class="mb-2" th:action="@{/api/cart/finish}" method="post">
-            <button type="submit" class="btn btn-success">Terminar&nbsp;<i class="fa fa-check"></i>
-            </button>
-            <a th:href="@{/api/cart/clean}" class="btn btn-danger">Cancelar venta&nbsp;<i
-                    class="fa fa-trash"></i>
+            <a type="submit" class="btn btn-success">Terminar<i class="fa fa-check"></i>
             </a>
-        </form>
-        <h1 th:text="${'Total: ' + total}"></h1>
+            <a type="submit" th:href="@{/api/cart/clean}" class="btn btn-danger">Cancelar venta<i class="fa fa-trash"></i>
+            </a>
         <div class="table-responsive">
             <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th>Nombre</th>
                     <th>Código</th>
+                    <th>Descripcion</th>
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Total</th>
@@ -50,9 +68,10 @@
                 <tr th:each="product, iterador : ${session.cart}">
                     <td th:text="${product.name}"></td>
                     <td th:text="${product.SKU}"></td>
+                    <td th:text="${product.description}"></td>
                     <td th:text="${product.price}"></td>
-                    <td th:text="${product.getStock()}"></td>
-                    <td th:text="${product.totalSold}"></td>
+                    <td th:text="${product.quantity}"></td>
+                    <td th:text="${product != null ? (product.totalSold != null ? product.totalSold : '') : ''}"></td>
                     <td>
                         <form th:action="@{/api/cart/delete/} + ${iterador.index}" method="post">
                             <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>
@@ -65,5 +84,7 @@
         </div>
     </div>
 </div>
+</div>
+<div th:insert="~{layouts/footer :: footer}"></div>
 </body>
 </html>
