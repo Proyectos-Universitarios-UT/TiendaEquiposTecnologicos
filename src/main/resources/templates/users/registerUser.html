@@ -51,9 +51,9 @@
             </table>
             </div>
         </form>
-            <form th:action="@{api/users}">
+            <form th:action="@{api/users/list}">
                 <div>
-                    <button class="btn-success">List Users</button>
+                    <a th:href="@{api/users/list}" class="btn btn-success">List Users</a>
                 </div>
             </form>
         <div th:text="${msg}"></div>

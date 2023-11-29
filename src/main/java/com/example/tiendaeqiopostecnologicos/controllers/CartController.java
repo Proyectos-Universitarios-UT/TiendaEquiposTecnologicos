@@ -36,7 +36,7 @@ public class CartController {
             cart.remove(id);
             this.saveCart(cart, request);
         }
-        return "cart/cart";
+        return "redirect:/api/cart/sale";
     }
 
     private void cleanCart(HttpServletRequest request) {
@@ -45,15 +45,11 @@ public class CartController {
 
     @GetMapping(value = "/clean")
     public String cancelSale(HttpServletRequest request, RedirectAttributes redirectAttrs) {
-        ArrayList<ProductToSale> cart = this.getCart(request);
-        if (cart.size() <= 0){
-            return "cart/cart";
-        }
         this.cleanCart(request);
         redirectAttrs
                 .addFlashAttribute("mensaje", "Venta cancelada")
                 .addFlashAttribute("clase", "info");
-        return "cart/cart";
+        return "redirect:/api/cart/sale";
     }
 
     @PostMapping(value = "/finish")
@@ -61,7 +57,7 @@ public class CartController {
         ArrayList<ProductToSale> cart = this.getCart(request);
         // Si no hay carrito o está vacío, regresamos inmediatamente
         if (cart.size() <= 0) {
-            return "cart/cart";
+            return "redirect:/api/cart/sale";
         }
         Sale sale = salesRepository.save(new Sale());
         // Recorrer el carrito
@@ -79,14 +75,13 @@ public class CartController {
             // Y lo guardamos
             productSoldRepsitory.save(productSold);
         }
-
         // Al final limpiamos el carrito
         this.cleanCart(request);
         // e indicamos una venta exitosa
         redirectAttrs
                 .addFlashAttribute("mensaje", "Venta realizada correctamente")
                 .addFlashAttribute("clase", "success");
-        return "cart/cart";
+        return "redirect:/api/cart/sale";
     }
 
     @GetMapping(value = "/sale")
@@ -122,13 +117,13 @@ public class CartController {
             redirectAttrs
                     .addFlashAttribute("mensaje", "El producto con el código " + product.getSKU() + " no existe")
                     .addFlashAttribute("clase", "warning");
-            return "/cart/cart";
+            return "redirect:/api/cart/sale";
         }
         if (productFindBySKU.isEmptyStock()) {
             redirectAttrs
                     .addFlashAttribute("mensaje", "El producto está agotado")
                     .addFlashAttribute("clase", "warning");
-            return "/cart/cart";
+            return "redirect:/api/cart/sale";
         }
         Long quantity = product.getQuantity();
         boolean encontrado = false;
@@ -144,6 +139,6 @@ public class CartController {
                     productFindBySKU.getDescription(), productFindBySKU.getPrice(), productFindBySKU.getId(), quantity));
         }
         this.saveCart(cart, request);
-        return "cart/cart";
+        return "redirect:/api/cart/sale";
     }
 }

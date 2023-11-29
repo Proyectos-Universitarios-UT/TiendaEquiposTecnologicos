@@ -43,16 +43,18 @@
                         <table class="table table-bordered">
                             <thead>
                             <tr>
-                                <th>Nombre</th>
-                                <th>Código de barras</th>
-                                <th>Cantidad vendida</th>
-                                <th>Precio</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Code</th>
+                                <th>Quantity Sold</th>
+                                <th>Price</th>
                                 <th>Total</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr th:each="product : ${sale.products}">
                                 <td th:text="${product.name}"></td>
+                                <td th:text="${product.description}"></td>
                                 <td th:text="${product.SKU}"></td>
                                 <td th:text="${product.quantityProducts}"></td>
                                 <td th:text="${product.price}"></td>
