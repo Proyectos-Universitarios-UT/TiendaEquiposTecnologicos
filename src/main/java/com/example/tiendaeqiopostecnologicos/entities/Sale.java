@@ -30,7 +30,6 @@ public class Sale {
         Double total = 0.0;
         for (ProductSold prod : products) {
             total = total + prod.getTotal();
-            System.out.println(prod.getTotal());
         }
         return total;
     }

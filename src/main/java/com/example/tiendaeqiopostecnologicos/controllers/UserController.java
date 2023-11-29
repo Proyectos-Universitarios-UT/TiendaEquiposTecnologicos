@@ -33,6 +33,6 @@ public class UserController {
     public String listUsers(Model model){
         model.addAttribute("users", userService.findAll());
         System.out.println(userService.findAll());
-        return "users/list_users";
+        return "redirect:users/list_users";
     }
 }
